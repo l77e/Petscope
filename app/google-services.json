@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "998712224276",
+    "firebase_url": "https://firecat-24cec.firebaseio.com",
+    "project_id": "firecat-24cec",
+    "storage_bucket": "firecat-24cec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998712224276:android:07b476b11d049550",
+        "android_client_info": {
+          "package_name": "com.petscope.lukeedgar.petscope"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998712224276-7k1e22l66jbu3s5bcrbbailici748gj0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petscope.lukeedgar.petscope",
+            "certificate_hash": "c536445fa1dac3a31f25b4227aa1def8fe55db57"
+          }
+        },
+        {
+          "client_id": "998712224276-83deg2iqmir518p41v6f651qovl0hstd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmPyeOuVwTk_LH_O0YjLVV_PrrJzPbC-0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998712224276-83deg2iqmir518p41v6f651qovl0hstd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

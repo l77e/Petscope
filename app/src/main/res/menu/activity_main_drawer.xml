@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_animals"
+            android:icon="@drawable/ic_black_paw"
+            android:title="All Animals" />
+        <item
+            android:id="@+id/nav_dogs"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Dogs" />
+        <item
+            android:id="@+id/nav_cats"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Cats" />
+        <item
+            android:id="@+id/nav_other_animals"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Other Animals" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
