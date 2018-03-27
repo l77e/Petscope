@@ -8,6 +8,20 @@
     <string name="Tagline">The official pet encyclopedia</string>
     <string name="action_search">Search</string>
     <string name="title_activity_add">Add An Animal</string>
+    <string name="animal_type">Animal Type</string>
+    <string name="animal_name">Animal Name</string>
+    <string name="animal_breed">Animal Breed</string>
+    <string name="gender">Gender</string>
+    <array name="Genders">
+        <item>Male</item>
+        <item>Female</item>
+    </array>
+    <string name="title_activity_animal_details">AnimalDetailsActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_animal_list">Animals</string>
+    <string name="title_animal_detail">Animal Detail</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

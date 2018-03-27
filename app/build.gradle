@@ -10,7 +10,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.petscope.lukeedgar.petscope"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -42,9 +42,19 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //Images
     compile 'commons-io:commons-io:2.6'
+    //Colour Picker
+    compile 'com.github.eltos:simpledialogfragment:2.2.2'
+    //Holly style View Pager
+    compile 'com.github.florent37:hollyviewpager:1.0.1'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
 }
 
 
 
 
 apply plugin: 'com.google.gms.google-services'
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

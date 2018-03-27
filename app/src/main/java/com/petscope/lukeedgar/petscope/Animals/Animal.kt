@@ -1,12 +1,14 @@
 package com.petscope.lukeedgar.petscope.Animals
 
 import android.media.Image
+import com.google.firebase.database.FirebaseDatabase
+import java.io.Serializable
 
 
 /**
  * Created by lukeedgar on 21/03/2018.
  */
-open class Animal {
+open class Animal : Serializable {
     var ImageURL = ""
     var Address = ""
     var Animal_Breed = ""
@@ -18,5 +20,11 @@ open class Animal {
 
     override fun toString(): String {
         return Address + Animal_Breed + Animal_Color + Animal_Gender + Animal_ID + Animal_Name + animal_type
+    }
+
+    fun AddToDatabase(database: FirebaseDatabase) {
+        database.reference
+                .push()
+                .setValue(this)
     }
 }

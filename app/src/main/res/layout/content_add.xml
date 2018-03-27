@@ -14,6 +14,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16sp">
+        <TextView
+            android:id="@+id/txtSpinnerGenderHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/gender" />
+
+        <Spinner
+            android:id="@+id/spnGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="8dp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -23,10 +36,20 @@
                 android:id="@+id/txtAnimalName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Animal Name" />
-
+                android:hint="@string/animal_name" />
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <AutoCompleteTextView
+                android:id="@+id/txtAnimalTypeAuto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/animal_type" />
+        </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -35,16 +58,28 @@
                 android:id="@+id/txtAnimalBreed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Animal Breed" />
+                android:hint="@string/animal_breed" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spnGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txtAnimalAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Animal Address" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnColourPicker"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Animal Colour" />
         <Button
             android:id="@+id/btnAdd"
             style="@style/Widget.AppCompat.Button.Colored"

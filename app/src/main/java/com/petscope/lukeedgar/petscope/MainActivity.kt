@@ -1,20 +1,25 @@
 package com.petscope.lukeedgar.petscope
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.util.Pair
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.firebase.database.*
 import com.petscope.lukeedgar.petscope.Animals.Animal
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import com.petscope.lukeedgar.petscope.Adapters.AnimalCardAdapter
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -26,11 +31,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar =  findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         //Hamburger menu setup
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, drawer_layout, toolbar , R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
@@ -57,7 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
-                animalListQuery(animalList as List<Animal>,query)
+                query.animalListQuery()
                 return false
             }
 
@@ -119,8 +125,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 databaseSnapshot?.children
                         ?.forEach {
                             val animal = it.getValue(Animal::class.java)
-                            if (animal?.animal_type != "Cat" || animal.animal_type != "cat" || animal.animal_type != "Dog" || animal.animal_type != "dog") {
-                                animalList?.add(animal!!)
+                            if ("cat" in animal?.toString()!! || "Cat" in animal.toString() || "Dog" in animal.toString() || "dog" in animal.toString()) {
+                                animalList?.add(animal)
                             }
                         }
             }
@@ -132,7 +138,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
         }
-        fillRecyclerViewPetCards(animalList!!)
+        animalList!!.fillRecyclerView()
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -144,12 +150,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 dataSnapshot.children
+                        ?.sortedByDescending { x -> x.child("Animal_Name").value.toString() }
                         ?.forEach {
                             val animal = it.getValue(Animal::class.java)
                             animalList?.add(animal!!)
                         }
                 databaseSnapshot = dataSnapshot
-                fillRecyclerViewPetCards(animalList!!)
+                animalList!!.fillRecyclerView()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -168,29 +175,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         animalList?.add(animal!!)
                 }
         //Update the recyclerview
-        fillRecyclerViewPetCards(animalList!!)
+        animalList!!.fillRecyclerView()
     }
 
-    fun animalListQuery(list: List<Animal>, search: String = "") = if (search != "" || databaseSnapshot != null) {
+    fun String.animalListQuery() = if (this != "" || databaseSnapshot != null) {
         val queriedList = ArrayList<Animal>()
-        databaseSnapshot
-                ?.children
-                ?.filter { x -> x.getValue(Animal::class.java)
-                        .toString()
-                        .toLowerCase()
-                        .trim()
-                        .contains(search)
-                }
-                ?.forEach { queriedList.add(it.getValue(Animal::class.java)!!) }
-        fillRecyclerViewPetCards(queriedList)
+            databaseSnapshot
+                    ?.children
+                    ?.filter {
+                        it.getValue(Animal::class.java)
+                                .toString()
+                                .toLowerCase()
+                                .trim()
+                                .contains(this)
+                    }
+                    ?.map { queriedList += it.getValue(Animal::class.java)!! }
+            queriedList.fillRecyclerView()
     }else{
-        fillRecyclerViewPetCards(animalList!!)
+        animalList!!.fillRecyclerView()
     }
 
-    fun fillRecyclerViewPetCards(list: List<Animal>) {
-        rcvAnimalCards.adapter = AnimalCardAdapter(applicationContext, list)
-        rcvAnimalCards.layoutManager = LinearLayoutManager(this)
-
+    fun List<Animal>.fillRecyclerView() {
+        rcvAnimalCards.adapter = AnimalCardAdapter(applicationContext, this)
+        rcvAnimalCards.layoutManager = LinearLayoutManager(this@MainActivity)
+        val list = ArrayList<Animal>()
+        this.forEach { it -> list.add(it) }
     }
 
 }
