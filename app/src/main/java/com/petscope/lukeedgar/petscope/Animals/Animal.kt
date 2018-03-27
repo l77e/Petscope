@@ -22,7 +22,7 @@ open class Animal : Serializable {
         return Address + Animal_Breed + Animal_Color + Animal_Gender + Animal_ID + Animal_Name + animal_type
     }
 
-    fun AddToDatabase(database: FirebaseDatabase) {
+    fun addToDatabase(database: FirebaseDatabase) {
         database.reference
                 .push()
                 .setValue(this)

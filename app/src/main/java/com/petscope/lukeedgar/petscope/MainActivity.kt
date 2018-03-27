@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
-                query.animalListQuery()
+                //Return Query resuilts in recyclerview
+                query.toLowerCase().animalListQuery()
                 return false
             }
 
@@ -189,7 +190,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 .trim()
                                 .contains(this)
                     }
-                    ?.map { queriedList += it.getValue(Animal::class.java)!! }
+                    ?.forEach { queriedList += it.getValue(Animal::class.java)!! }
             queriedList.fillRecyclerView()
     }else{
         animalList!!.fillRecyclerView()

@@ -67,19 +67,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.design.widget.TextInputEditText
+            <EditText
                 android:id="@+id/txtAnimalAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Animal Address" />
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Animal Address"
+                android:inputType="textPostalAddress" />
         </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnColourPicker"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose Animal Colour" />
+        <com.github.naz013.colorslider.ColorSlider
+            android:id="@+id/color_slider"
+            android:layout_width="match_parent"
+            app:cs_colors="@array/colors"
+            android:layout_height="36dp" />
         <Button
             android:id="@+id/btnAdd"
             style="@style/Widget.AppCompat.Button.Colored"
