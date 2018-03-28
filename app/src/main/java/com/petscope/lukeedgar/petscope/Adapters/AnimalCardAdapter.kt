@@ -32,8 +32,8 @@ class AnimalCardAdapter(context: Context, private val data: List<Animal>) : Recy
         val currentAnimal = data[position]
         holder.animalName?.text = currentAnimal.Animal_Name
         holder.animalType?.text = "${currentAnimal.animal_type} (${currentAnimal.Animal_Breed})"
-
-        //getCoverImage(currentAnimal.Animal_Breed,holder?.imgProfile!!)
+        //Load the animal icon into imgAnimalIcon ItemView
+        currentAnimal.loadAnimalIcon(_context,holder.imgAnimalIcon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,7 +44,7 @@ class AnimalCardAdapter(context: Context, private val data: List<Animal>) : Recy
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var animalName = itemView.txtName
         var animalType = itemView.txtAnimal
-
+        var imgAnimalIcon = itemView.imgAnimalIcon
         init {
             itemView.setOnClickListener(this)
         }

@@ -15,23 +15,31 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
+        <ImageView
+            android:id="@+id/imgAnimalIcon"
+            android:layout_width="100dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_launcher_foreground" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:transitionName="AnimalName"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/primaryTextColor" />
+                android:textColor="@color/primaryTextColor"
+                android:transitionName="AnimalName" />
 
             <TextView
                 android:id="@+id/txtAnimal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@color/primaryTextColor" />

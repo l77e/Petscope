@@ -25,15 +25,16 @@
         <activity
             android:name=".AddActivity"
             android:label="@string/title_activity_add"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AnimalDetailActivity"
-            android:label="Animal Detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:fitsSystemWindows="true"/>
         <activity
             android:name=".AnimalDetailsActivity"
             android:label="@string/title_activity_animal_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

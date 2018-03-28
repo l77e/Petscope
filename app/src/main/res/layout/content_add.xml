@@ -76,11 +76,19 @@
                 android:hint="Animal Address"
                 android:inputType="textPostalAddress" />
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txtColourPickerHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Animal Colour" />
+
         <com.github.naz013.colorslider.ColorSlider
             android:id="@+id/color_slider"
             android:layout_width="match_parent"
-            app:cs_colors="@array/colors"
-            android:layout_height="36dp" />
+            android:layout_height="36dp"
+            app:cs_colors="@array/colors" />
         <Button
             android:id="@+id/btnAdd"
             style="@style/Widget.AppCompat.Button.Colored"

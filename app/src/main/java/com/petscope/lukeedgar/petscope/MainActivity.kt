@@ -1,25 +1,22 @@
 package com.petscope.lukeedgar.petscope
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.util.Pair
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.petscope.lukeedgar.petscope.Adapters.AnimalCardAdapter
 import com.petscope.lukeedgar.petscope.Animals.Animal
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import com.petscope.lukeedgar.petscope.Adapters.AnimalCardAdapter
-import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -31,21 +28,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar =  findViewById<Toolbar>(R.id.toolbar)
+        val toolbar: android.support.v7.widget.Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         //Hamburger menu setup
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar , R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
 
         //On floatingActionButton click then launch add item activity
         fabAddAnimal.setOnClickListener {
-            val intent = Intent(applicationContext,AddActivity::class.java)
+            val intent = Intent(applicationContext, AddActivity::class.java)
             startActivity(intent)
         }
+        //Start firebase listener
+        firebaseListener()
     }
 
     override fun onBackPressed() {
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-
+                query.toLowerCase().animalListQuery()
                 return false
             }
         })
@@ -84,13 +83,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        //Start firebase listener
-        firebaseListener()
-        //getAllAnimals()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -156,7 +148,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             val animal = it.getValue(Animal::class.java)
                             animalList?.add(animal!!)
                         }
+
                 databaseSnapshot = dataSnapshot
+
                 animalList!!.fillRecyclerView()
             }
 
@@ -172,8 +166,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 ?.children
                 ?.forEach {
                     val animal = it.getValue(Animal::class.java)
-                    if (animal?.Animal_Name != "")
+                    if (animal?.Animal_Name != "") {
                         animalList?.add(animal!!)
+                    }
                 }
         //Update the recyclerview
         animalList!!.fillRecyclerView()
@@ -181,18 +176,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun String.animalListQuery() = if (this != "" || databaseSnapshot != null) {
         val queriedList = ArrayList<Animal>()
-            databaseSnapshot
-                    ?.children
-                    ?.filter {
-                        it.getValue(Animal::class.java)
-                                .toString()
-                                .toLowerCase()
-                                .trim()
-                                .contains(this)
-                    }
-                    ?.forEach { queriedList += it.getValue(Animal::class.java)!! }
-            queriedList.fillRecyclerView()
-    }else{
+        databaseSnapshot
+                ?.children
+                ?.filter {
+                    it.getValue(Animal::class.java)
+                            .toString()
+                            .toLowerCase()
+                            .trim()
+                            .contains(this)
+                }
+                ?.forEach { queriedList += it.getValue(Animal::class.java)!! }
+        queriedList.fillRecyclerView()
+    } else {
         animalList!!.fillRecyclerView()
     }
 
@@ -200,7 +195,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         rcvAnimalCards.adapter = AnimalCardAdapter(applicationContext, this)
         rcvAnimalCards.layoutManager = LinearLayoutManager(this@MainActivity)
         val list = ArrayList<Animal>()
-        this.forEach { it -> list.add(it) }
+        this.forEach { list.add(it) }
     }
 
 }

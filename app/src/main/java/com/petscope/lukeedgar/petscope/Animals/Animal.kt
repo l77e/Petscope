@@ -1,8 +1,15 @@
 package com.petscope.lukeedgar.petscope.Animals
 
+import android.content.Context
 import android.media.Image
+import android.widget.ImageView
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_add.*
+import java.io.Console
 import java.io.Serializable
+import java.net.URL
+import java.util.*
 
 
 /**
@@ -23,8 +30,27 @@ open class Animal : Serializable {
     }
 
     fun addToDatabase(database: FirebaseDatabase) {
+        Animal_ID = generateId()
         database.reference
                 .push()
                 .setValue(this)
+    }
+    fun loadAnimalIcon(context: Context, imageView: ImageView){
+        if (animal_type != "") {
+            Picasso.with(context)
+                    .load("file:///android_asset/animal_icons/${animal_type.capitalize()}.png")
+                    .into(imageView)
+        }
+    }
+    fun loadAnimalImage(context: Context, imageView: ImageView, url: String = ImageURL){
+        if (url != "") {
+            //Load the Image into toolbar
+            Picasso.with(context)
+                    .load(url)
+                    .into(imageView)
+        }
+    }
+    private fun generateId(): String {
+        return UUID.randomUUID().toString()
     }
 }
