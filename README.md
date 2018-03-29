@@ -1,12 +1,9 @@
 # PetScope
 
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" align="left" width="70" hspace="10" vspace="10">
 
 A kotlin based Android application that allows users to submit their pets or animals to an online database. 
-<div style="display:flex;" >
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" align="left" width="70" hspace="10" vspace="10">
-</div>
-</br></br>
-
+[Download Now] ("app")
 ## Chosen Project: Option 4
 
 Data Display and Search
