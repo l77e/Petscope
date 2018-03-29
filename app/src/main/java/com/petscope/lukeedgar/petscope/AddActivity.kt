@@ -69,8 +69,7 @@ class AddActivity : AppCompatActivity() {
         return ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, animals)
     }
 
-    private fun hexCodeColourToWord(hexColour: String): String {
-        return when (hexColour) {
+    private fun hexCodeColourToWord(hexColour: String): String = when (hexColour) {
             "CC6F18" -> "Orange"
             "B2953E" -> "Golden"
             "54524C" -> "Grey"
@@ -78,8 +77,6 @@ class AddActivity : AppCompatActivity() {
             "AAAAAA" -> "White / Silver"
             else -> ""
         }
-        //Improvement: Use machine learning to identify broad colours
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)

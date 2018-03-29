@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -17,13 +18,14 @@ import com.google.firebase.database.ValueEventListener
 import com.petscope.lukeedgar.petscope.Adapters.AnimalCardAdapter
 import com.petscope.lukeedgar.petscope.Animals.Animal
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var databaseSnapshot: DataSnapshot? = null
-    private var ref = database.reference
-    private var animalList: ArrayList<Animal>? = ArrayList()
+    private var ref = database.reference.child("Animals")
+    private var animalList: ArrayList<Animal> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
-                //Return Query resuilts in recyclerview
+                //Return Query results in recyclerview
                 query.toLowerCase().animalListQuery()
                 return false
             }
@@ -86,7 +88,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        animalList = ArrayList()
         when (item.itemId) {
             R.id.nav_all_animals -> {
                 // List all animals
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         ?.forEach {
                             val animal = it.getValue(Animal::class.java)
                             if ("cat" != animal?.toString()!! || "Cat" != animal.toString() || "Dog" != animal.toString() || "dog" != animal.toString()) {
-                                animalList?.add(animal)
+                                animalList.add(animal)
                             }
                         }
             }
@@ -118,27 +119,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent.createChooser(intent, "Share this app"))
             }
         }
-        //animalList!!.fillRecyclerView()
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
     private fun firebaseListener() {
         // Read from the database
+        ref.orderByPriority()
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 dataSnapshot.children
-                        ?.sortedByDescending { x -> x.child("Animal_Name").value.toString() }
-                        ?.forEach {
-                            val animal = it.getValue(Animal::class.java)
-                            animalList?.add(animal!!)
-                        }
+                        .mapNotNullTo(animalList) { it.getValue(Animal::class.java) }
 
                 databaseSnapshot = dataSnapshot
 
-                animalList!!.fillRecyclerView()
+                animalList.fillRecyclerView()
+
+                prbLoad.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -151,14 +150,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getAllAnimals() {
         databaseSnapshot
                 ?.children
-                ?.forEach {
-                    val animal = it.getValue(Animal::class.java)
-                    if (animal?.Animal_Name != "") {
-                        animalList?.add(animal!!)
-                    }
-                }
+                ?.mapNotNullTo(animalList) { it.getValue(Animal::class.java) }
         //Update the RecyclerView
-        animalList!!.fillRecyclerView()
+        animalList.fillRecyclerView()
     }
 
     fun String.animalListQuery() = if (this != "" || databaseSnapshot != null) {
@@ -169,13 +163,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     it.getValue(Animal::class.java)
                             .toString()
                             .toLowerCase()
-                            .trim()
                             .containsWords(this)
                 }
-                ?.forEach { queriedList += it.getValue(Animal::class.java)!! }
+                ?.mapNotNullTo(queriedList) { it.getValue(Animal::class.java) }
         queriedList.fillRecyclerView()
     } else {
-        animalList!!.fillRecyclerView()
+        animalList.fillRecyclerView()
     }
 
     private fun String.containsWords(string: String): Boolean{
@@ -191,8 +184,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun List<Animal>.fillRecyclerView() {
         rcvAnimalCards.adapter = AnimalCardAdapter(applicationContext, this)
         rcvAnimalCards.layoutManager = LinearLayoutManager(this@MainActivity)
-        val list = ArrayList<Animal>()
-        this.forEach { list += it }
     }
 
 }

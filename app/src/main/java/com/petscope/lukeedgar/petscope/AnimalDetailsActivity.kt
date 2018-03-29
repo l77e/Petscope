@@ -45,10 +45,10 @@ class AnimalDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAnimalDetails(): String {
+    private fun getAnimalDetails(): String =
         //Lists animal with each attribute on each line
-        return "ID: ${animal.Animal_ID}\nName: ${animal.Animal_Name} \nAnimal: ${animal.animal_type}\nBreed: ${animal.Animal_Breed}\nGender: ${animal.Animal_Gender}\nColour: ${animal.Animal_Color}\nAddress: ${animal.Address}"
-    }
+        "ID: ${animal.Animal_ID}\nName: ${animal.Animal_Name} \nAnimal: ${animal.animal_type}\nBreed: ${animal.Animal_Breed}\nGender: ${animal.Animal_Gender}\nColour: ${animal.Animal_Color}\nAddress: ${animal.Address}"
+
 
     private fun getCoverImage() {
         //There is no image for this animal, load placeholder

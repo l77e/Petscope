@@ -16,21 +16,20 @@ import kotlinx.android.synthetic.main.pet_card.view.*
  */
 class AnimalCardAdapter(val context: Context, private val data: List<Animal>) : RecyclerView.Adapter<AnimalCardAdapter.ViewHolder>() {
 
-    private var inflater: LayoutInflater = LayoutInflater.from(context)
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount(): Int = data.size
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = inflater.inflate(R.layout.pet_card, parent, false)
+        return ViewHolder(view)
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentAnimal = data[position]
         holder.animalName?.text = currentAnimal.Animal_Name
         holder.animalType?.text = "${currentAnimal.animal_type} (${currentAnimal.Animal_Breed})"
         //Load the animal icon into imgAnimalIcon ItemView
         currentAnimal.loadAnimalIcon(context,holder.imgAnimalIcon)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.pet_card, parent, false)
-        return ViewHolder(view)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {

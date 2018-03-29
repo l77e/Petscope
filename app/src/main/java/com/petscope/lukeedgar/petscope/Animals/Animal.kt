@@ -32,6 +32,7 @@ open class Animal : Serializable {
     fun addToDatabase(database: FirebaseDatabase) {
         Animal_ID = generateId()
         database.reference
+                .child("Animals")
                 .push()
                 .setValue(this)
     }
