@@ -20,10 +20,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    var databaseSnapshot: DataSnapshot? = null
-    var ref = database.reference
-    var animalList: ArrayList<Animal>? = ArrayList()
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var databaseSnapshot: DataSnapshot? = null
+    private var ref = database.reference
+    private var animalList: ArrayList<Animal>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         //Hamburger menu setup
-        val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
@@ -95,48 +94,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_dogs -> {
                 //List Dogs
-                databaseSnapshot?.children
-                        ?.forEach {
-                            val animal = it.getValue(Animal::class.java)
-                            if (animal?.animal_type == "dog" || animal?.animal_type == "Dog") {
-                                animalList?.add(animal)
-                            }
-                        }
+                "dog".animalListQuery()
             }
             R.id.nav_cats -> {
                 //List Cats
-                databaseSnapshot?.children
-                        ?.forEach {
-                            val animal = it.getValue(Animal::class.java)
-                            if (animal?.animal_type == "Cat" || animal?.animal_type == "Cat") {
-                                animalList?.add(animal)
-                            }
-                        }
+                "cat".animalListQuery()
             }
             R.id.nav_other_animals -> {
                 //List other animals that are not cats or dogs Examples: Lions, Tigers and Bears (oh my!)
                 databaseSnapshot?.children
                         ?.forEach {
                             val animal = it.getValue(Animal::class.java)
-                            if ("cat" in animal?.toString()!! || "Cat" in animal.toString() || "Dog" in animal.toString() || "dog" in animal.toString()) {
+                            if ("cat" != animal?.toString()!! || "Cat" != animal.toString() || "Dog" != animal.toString() || "dog" != animal.toString()) {
                                 animalList?.add(animal)
                             }
                         }
             }
             R.id.nav_share -> {
                 val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing URL")
+                intent.putExtra(Intent.EXTRA_TEXT, "https://github.com/l77e/Petscope")
                 startActivity(Intent.createChooser(intent, "Share this app"))
             }
-            R.id.nav_send -> {
-
-            }
         }
-        animalList!!.fillRecyclerView()
+        //animalList!!.fillRecyclerView()
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    fun firebaseListener() {
+    private fun firebaseListener() {
         // Read from the database
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -161,7 +148,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-    fun getAllAnimals() {
+    private fun getAllAnimals() {
         databaseSnapshot
                 ?.children
                 ?.forEach {
@@ -170,7 +157,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         animalList?.add(animal!!)
                     }
                 }
-        //Update the recyclerview
+        //Update the RecyclerView
         animalList!!.fillRecyclerView()
     }
 
@@ -183,7 +170,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             .toString()
                             .toLowerCase()
                             .trim()
-                            .contains(this)
+                            .containsWords(this)
                 }
                 ?.forEach { queriedList += it.getValue(Animal::class.java)!! }
         queriedList.fillRecyclerView()
@@ -191,11 +178,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         animalList!!.fillRecyclerView()
     }
 
+    private fun String.containsWords(string: String): Boolean{
+        val splitedWords = string.split(" ")
+        for (word in splitedWords){
+            if (this.contains(word)){
+                return true
+            }
+        }
+        return false
+    }
+
     fun List<Animal>.fillRecyclerView() {
         rcvAnimalCards.adapter = AnimalCardAdapter(applicationContext, this)
         rcvAnimalCards.layoutManager = LinearLayoutManager(this@MainActivity)
         val list = ArrayList<Animal>()
-        this.forEach { list.add(it) }
+        this.forEach { list += it }
     }
 
 }

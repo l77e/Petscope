@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.content_add.*
 
 
 class AddActivity : AppCompatActivity() {
-    var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    var storage = FirebaseStorage.getInstance().reference
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var storage = FirebaseStorage.getInstance().reference
     private var selectedImageUri: Uri = Uri.EMPTY
     private var animal = Animal()
 
@@ -30,7 +30,7 @@ class AddActivity : AppCompatActivity() {
         fab.setOnClickListener { loadImageUploadDialog() }
 
         //Initialise Gender Spinner
-        val spinnerArray: Array<String> = resources.getStringArray(R.array.Genders)
+        val spinnerArray = resources.getStringArray(R.array.Genders)
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spnGender.adapter = adapter
@@ -64,7 +64,7 @@ class AddActivity : AppCompatActivity() {
         finish()
     }
 
-    fun animalTypeAutoCompleteAdapter(): ArrayAdapter<String> {
+    private fun animalTypeAutoCompleteAdapter(): ArrayAdapter<String> {
         val animals = resources.getStringArray(R.array.Animals)
         return ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, animals)
     }

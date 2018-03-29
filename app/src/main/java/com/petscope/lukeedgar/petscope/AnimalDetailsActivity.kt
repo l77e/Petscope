@@ -5,7 +5,6 @@ import android.os.StrictMode
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.petscope.lukeedgar.petscope.Animals.Animal
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_animal_details.*
 import kotlinx.android.synthetic.main.content_animal_details.*
 import org.apache.commons.io.IOUtils

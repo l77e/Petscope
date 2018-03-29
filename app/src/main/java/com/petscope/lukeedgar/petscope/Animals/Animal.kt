@@ -26,7 +26,7 @@ open class Animal : Serializable {
     var animal_type = ""
 
     override fun toString(): String {
-        return Address + Animal_Breed + Animal_Color + Animal_Gender + Animal_ID + Animal_Name + animal_type
+        return "$Address$Animal_Breed$Animal_Color$Animal_Gender$Animal_ID$Animal_Name$animal_type"
     }
 
     fun addToDatabase(database: FirebaseDatabase) {
@@ -50,7 +50,6 @@ open class Animal : Serializable {
                     .into(imageView)
         }
     }
-    private fun generateId(): String {
-        return UUID.randomUUID().toString()
-    }
+    private fun generateId(): String = UUID.randomUUID().toString()
+
 }
