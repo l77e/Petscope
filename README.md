@@ -1,6 +1,11 @@
 # PetScope
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" align="left" width="80" hspace="10" vspace="10">
+
+
 A kotlin based Android application that allows users to submit their pets or animals to an online database. 
+<div style="display:flex;" >
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" align="left" width="70" hspace="10" vspace="10">
+</div>
+</br></br>
 
 ## Chosen Project: Option 4
 
@@ -16,3 +21,4 @@ Create a catalogue (like encyclopedia) of data on adoptable pets (name, descript
 * Picasso by Squareup: For image management
 * ColourSlider by github.com/naz013: For colour selection
 * Animal Icons by github.com/wayou
+ 
