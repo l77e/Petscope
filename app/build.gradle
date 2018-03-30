@@ -45,6 +45,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //Colour Picker
     compile 'com.github.naz013:ColorSlider:1.0.3'
+    //Vision
+    //compile 'com.google.cloud:google-cloud-vision:1.24.0'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-v4'

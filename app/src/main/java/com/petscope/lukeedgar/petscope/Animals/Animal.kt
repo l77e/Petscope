@@ -1,15 +1,12 @@
 package com.petscope.lukeedgar.petscope.Animals
 
 import android.content.Context
-import android.media.Image
 import android.widget.ImageView
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_add.*
-import java.io.Console
-import java.io.Serializable
-import java.net.URL
 import java.util.*
+import java.io.*
+import java.net.URL
 
 
 /**
@@ -29,6 +26,10 @@ open class Animal : Serializable {
         return "$Address$Animal_Breed$Animal_Color$Animal_Gender$Animal_ID$Animal_Name$animal_type"
     }
 
+    fun animalDetails(): String =
+    //Lists animal with each attribute on each line
+            "ID: ${Animal_ID}\nName: ${Animal_Name} \nAnimal: ${animal_type}\nBreed: ${Animal_Breed}\nGender: ${Animal_Gender}\nColour: ${Animal_Color}\nAddress: ${Address}"
+
     fun addToDatabase(database: FirebaseDatabase) {
         Animal_ID = generateId()
         database.reference
@@ -36,21 +37,24 @@ open class Animal : Serializable {
                 .push()
                 .setValue(this)
     }
-    fun loadAnimalIcon(context: Context, imageView: ImageView){
+
+    fun loadAnimalIcon(context: Context, imageView: ImageView) {
         if (animal_type != "") {
             Picasso.with(context)
                     .load("file:///android_asset/animal_icons/${animal_type.capitalize()}.png")
                     .into(imageView)
         }
     }
-    fun loadAnimalImage(context: Context, imageView: ImageView, url: String = ImageURL){
+
+    fun loadAnimalImage(context: Context, imageView: ImageView, url: String = ImageURL) {
         if (url != "") {
-            //Load the Image into toolbar
             Picasso.with(context)
                     .load(url)
                     .into(imageView)
         }
     }
+
     private fun generateId(): String = UUID.randomUUID().toString()
+
 
 }

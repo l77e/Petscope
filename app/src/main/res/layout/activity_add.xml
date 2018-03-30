@@ -14,6 +14,7 @@
         android:clickable="true"
         android:focusable="true"
         android:tint="@color/primaryTextColor"
+        android:tooltipText="Upload Image"
         android:visibility="visible"
         app:elevation="@dimen/cardview_default_radius"
         app:layout_anchor="@id/appbar"

@@ -1,9 +1,11 @@
 package com.petscope.lukeedgar.petscope
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.petscope.lukeedgar.petscope.Animals.Animal
 import kotlinx.android.synthetic.main.activity_animal_details.*
 import kotlinx.android.synthetic.main.content_animal_details.*
@@ -30,25 +32,20 @@ class AnimalDetailsActivity : AppCompatActivity() {
         toolbar_layout.title = "${animal.Animal_Name} The ${animal.animal_type}"
 
         fabDetails.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Share this animal's information")
+            intent.putExtra(Intent.EXTRA_TEXT, animal.toString())
+            startActivity(Intent.createChooser(intent, "Share this animal's information"))
         }
 
     }
 
     override fun onStart() {
         super.onStart()
-        txtDisplayAnimalInformation.text = getAnimalDetails()
-        try {
-            getCoverImage()
-        } catch (e: Exception) {
-        }
+        txtDisplayAnimalInformation.text = animal.animalDetails()
+        try { getCoverImage() } catch (e: Exception) { Toast.makeText(this,"Issue getting an image", Toast.LENGTH_SHORT).show() }
     }
-
-    private fun getAnimalDetails(): String =
-        //Lists animal with each attribute on each line
-        "ID: ${animal.Animal_ID}\nName: ${animal.Animal_Name} \nAnimal: ${animal.animal_type}\nBreed: ${animal.Animal_Breed}\nGender: ${animal.Animal_Gender}\nColour: ${animal.Animal_Color}\nAddress: ${animal.Address}"
-
 
     private fun getCoverImage() {
         //There is no image for this animal, load placeholder

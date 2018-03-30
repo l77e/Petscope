@@ -266,5 +266,8 @@
     <string name="title_animal_list">Animals</string>
     <string name="title_animal_detail">Animal Detail</string>
     <string name="animal_information">Animal Information</string>
+    <string name="dogs">Dogs</string>
+    <string name="cats">Cats</string>
+    <string name="share">Share</string>
 
 </resources>

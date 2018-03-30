@@ -7,25 +7,29 @@
         <item
             android:id="@+id/nav_all_animals"
             android:icon="@drawable/ic_black_paw"
+            android:iconTint="@color/cardview_dark_background"
             android:title="All Animals" />
         <item
             android:id="@+id/nav_dogs"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Dogs" />
+            android:icon="@drawable/ic_dog"
+            android:iconTint="@color/cardview_dark_background"
+            android:title="@string/dogs" />
         <item
             android:id="@+id/nav_cats"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Cats" />
+            android:icon="@drawable/ic_cat"
+            android:iconTint="@color/cardview_dark_background"
+            android:title="@string/cats" />
         <item
             android:id="@+id/nav_other_animals"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_more_horiz_black_24dp"
+            android:iconTint="@color/cardview_dark_background"
             android:title="Other Animals" />
     </group>
 
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/share" />
 
 
 

@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.petscope.lukeedgar.petscope.Adapters.AnimalCardAdapter
 import com.petscope.lukeedgar.petscope.Animals.Animal
+import com.petscope.lukeedgar.petscope.R.id.async
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
                 //Return Query results in recyclerview
-                query.toLowerCase().animalListQuery()
+                    query.toLowerCase().animalListQuery()
                 return false
             }
 
@@ -157,16 +158,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun String.animalListQuery() = if (this != "" || databaseSnapshot != null) {
         val queriedList = ArrayList<Animal>()
-        databaseSnapshot
-                ?.children
-                ?.filter {
-                    it.getValue(Animal::class.java)
-                            .toString()
-                            .toLowerCase()
-                            .containsWords(this)
-                }
-                ?.mapNotNullTo(queriedList) { it.getValue(Animal::class.java) }
-        queriedList.fillRecyclerView()
+        Runnable {
+            databaseSnapshot
+                    ?.children
+                    ?.filter {
+                        it.getValue(Animal::class.java)
+                                .toString()
+                                .toLowerCase()
+                                .containsWords(this)
+                    }
+                    ?.mapNotNullTo(queriedList) { it.getValue(Animal::class.java) }
+            queriedList.fillRecyclerView()
+        }.run()
+
     } else {
         animalList.fillRecyclerView()
     }
