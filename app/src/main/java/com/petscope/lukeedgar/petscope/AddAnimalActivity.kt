@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.content_add.*
 
 
-class AddActivity : AppCompatActivity() {
+class AddAnimalActivity : AppCompatActivity() {
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var storage = FirebaseStorage.getInstance().reference
     private var selectedImageUri: Uri = Uri.EMPTY

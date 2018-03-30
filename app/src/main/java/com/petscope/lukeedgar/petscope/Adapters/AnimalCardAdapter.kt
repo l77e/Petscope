@@ -1,11 +1,16 @@
 package com.petscope.lukeedgar.petscope.Adapters
 
+import android.app.FragmentManager
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import com.petscope.lukeedgar.petscope.ActionBottomSheetFragment
 import com.petscope.lukeedgar.petscope.AnimalDetailsActivity
 import com.petscope.lukeedgar.petscope.Animals.Animal
 import com.petscope.lukeedgar.petscope.R
@@ -17,7 +22,6 @@ import kotlinx.android.synthetic.main.pet_card.view.*
 class AnimalCardAdapter(val context: Context, private val data: List<Animal>) : RecyclerView.Adapter<AnimalCardAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-
     override fun getItemCount(): Int = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,18 +36,26 @@ class AnimalCardAdapter(val context: Context, private val data: List<Animal>) : 
         currentAnimal.loadAnimalIcon(context,holder.imgAnimalIcon)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val animalName = itemView.txtName
-        val animalType = itemView.txtAnimal
-        val imgAnimalIcon = itemView.imgAnimalIcon
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
+        val animalName: TextView = itemView.txtName
+        val animalType: TextView = itemView.txtAnimal
+        val imgAnimalIcon: ImageView = itemView.imgAnimalIcon
 
-        init { itemView.setOnClickListener(this) }
+        init { itemView.setOnClickListener(this); itemView.setOnLongClickListener(this) }
 
         override fun onClick(p0: View?) {
-                val intent = Intent(context, AnimalDetailsActivity::class.java)
-                    intent.flags =Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.putExtra("animal",data[position])
-                context.startActivity(intent)
-            }
+            val intent = Intent(context, AnimalDetailsActivity::class.java)
+            intent.flags =Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra("animal",data[position])
+            context.startActivity(intent)
         }
+        override fun onLongClick(v: View?): Boolean {
+            Toast.makeText(context,"Long tap",Toast.LENGTH_LONG).show()
+            val actionListDialogFragment = ActionBottomSheetFragment(data[position])
+            actionListDialogFragment.show(actionListDialogFragment.childFragmentManager, actionListDialogFragment.tag)
+            //actionListDialogFragment.show(actionListDialogFragment.fragmentManager, actionListDialogFragment.tag)
+            return false
+        }
+
     }
+}

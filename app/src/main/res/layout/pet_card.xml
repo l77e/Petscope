@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llPetCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8sp">
+    android:layout_margin="8sp"
+    android:background="@color/primaryDarkColor"
+    android:clickable="true"
+    android:longClickable="true"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/imgAnimalIcon"
+        android:layout_width="100dp"
+        android:layout_height="42dp"
+        android:layout_weight="1"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
 
     <LinearLayout
-        android:id="@+id/llPetCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryDarkColor"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgAnimalIcon"
-            android:layout_width="100dp"
-            android:layout_height="42dp"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_foreground" />
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/primaryTextColor"
+            android:transitionName="AnimalName" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/primaryTextColor"
-                android:transitionName="AnimalName" />
-
-            <TextView
-                android:id="@+id/txtAnimal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="@color/primaryTextColor" />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/txtAnimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/primaryTextColor" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

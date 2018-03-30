@@ -1,6 +1,7 @@
 package com.petscope.lukeedgar.petscope
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.design.widget.Snackbar
@@ -31,7 +32,7 @@ class AnimalDetailsActivity : AppCompatActivity() {
         //Set the toolbar title
         toolbar_layout.title = "${animal.Animal_Name} The ${animal.animal_type}"
 
-        fabDetails.setOnClickListener { view ->
+        fabDetails.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_SUBJECT, "Share this animal's information")
@@ -39,11 +40,18 @@ class AnimalDetailsActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share this animal's information"))
         }
 
+        btnWiki.setOnClickListener {
+           val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/${animal.Animal_Breed}"))
+            startActivity(intent)
+        }
+
     }
 
     override fun onStart() {
         super.onStart()
         txtDisplayAnimalInformation.text = animal.animalDetails()
+        txtAnimalExternalInfoHeader.text = "Find Out More About ${animal.Animal_Breed}s"
+        btnWiki.text = "Wikipedia: ${animal.Animal_Breed}"
         try { getCoverImage() } catch (e: Exception) { Toast.makeText(this,"Issue getting an image", Toast.LENGTH_SHORT).show() }
     }
 

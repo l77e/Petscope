@@ -12,6 +12,14 @@
     <string name="animal_name">Animal Name</string>
     <string name="animal_breed">Animal Breed</string>
     <string name="gender">Gender</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_animal_list">Animals</string>
+    <string name="title_animal_detail">Animal Detail</string>
+    <string name="animal_information">Animal Information</string>
+    <string name="dogs">Dogs</string>
+    <string name="cats">Cats</string>
+    <string name="share">Share</string>
+
     <array name="Genders">
         <item>Male</item>
         <item>Female</item>
@@ -262,12 +270,5 @@
     <item>zebra</item>
 </array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_animal_list">Animals</string>
-    <string name="title_animal_detail">Animal Detail</string>
-    <string name="animal_information">Animal Information</string>
-    <string name="dogs">Dogs</string>
-    <string name="cats">Cats</string>
-    <string name="share">Share</string>
 
 </resources>

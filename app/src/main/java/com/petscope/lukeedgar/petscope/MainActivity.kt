@@ -1,13 +1,17 @@
 package com.petscope.lukeedgar.petscope
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.petscope.lukeedgar.petscope.Adapters.AnimalCardAdapter
 import com.petscope.lukeedgar.petscope.Animals.Animal
-import com.petscope.lukeedgar.petscope.R.id.async
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -42,11 +46,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //On floatingActionButton click then launch add item activity
         fabAddAnimal.setOnClickListener {
-            val intent = Intent(applicationContext, AddActivity::class.java)
+            val intent = Intent(applicationContext, AddAnimalActivity::class.java)
             startActivity(intent)
         }
         //Start firebase listener
         firebaseListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (!isConnected())
+            Snackbar.make(rcvAnimalCards, "No Internet Connection :( ", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Dismiss", null).show()
     }
 
     override fun onBackPressed() {
@@ -65,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
                 //Return Query results in recyclerview
-                    query.toLowerCase().animalListQuery()
+                query.toLowerCase().animalListQuery()
                 return false
             }
 
@@ -104,13 +115,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_other_animals -> {
                 //List other animals that are not cats or dogs Examples: Lions, Tigers and Bears (oh my!)
+                val nonCatDogList = ArrayList<Animal>()
                 databaseSnapshot?.children
                         ?.forEach {
                             val animal = it.getValue(Animal::class.java)
-                            if ("cat" != animal?.toString()!! || "Cat" != animal.toString() || "Dog" != animal.toString() || "dog" != animal.toString()) {
-                                animalList.add(animal)
+                            if (!animal.toString().contains("cat") || !animal.toString().contains("dog")) {
+                                nonCatDogList.add(animal!!)
                             }
-                        }
+                       }
+                nonCatDogList.fillRecyclerView()
             }
             R.id.nav_share -> {
                 val intent = Intent(Intent.ACTION_SEND)
@@ -139,6 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 animalList.fillRecyclerView()
 
                 prbLoad.visibility = View.GONE
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -175,10 +189,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         animalList.fillRecyclerView()
     }
 
-    private fun String.containsWords(string: String): Boolean{
+    private fun String.containsWords(string: String): Boolean {
         val splitedWords = string.split(" ")
-        for (word in splitedWords){
-            if (this.contains(word)){
+        for (word in splitedWords) {
+            if (this.contains(word)) {
                 return true
             }
         }
@@ -190,4 +204,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         rcvAnimalCards.layoutManager = LinearLayoutManager(this@MainActivity)
     }
 
+    private fun isConnected(): Boolean {
+        val command = "ping -c 1 google.com"
+        return Runtime.getRuntime().exec(command).waitFor() == 0
+    }
 }
