@@ -19,3 +19,5 @@ Create a catalogue (like encyclopedia) of data on adoptable pets (name, descript
 * ColourSlider by github.com/naz013: For colour selection
 * Animal Icons by github.com/wayou
  
+## Known issues with this application
+* When adding a custom animal image, if the back button is pressed before the image is selected on the image selection dialog the app will crash
