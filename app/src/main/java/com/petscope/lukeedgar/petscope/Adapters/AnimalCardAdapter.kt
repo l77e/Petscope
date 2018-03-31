@@ -1,5 +1,6 @@
 package com.petscope.lukeedgar.petscope.Adapters
 
+import android.app.Activity
 import android.app.FragmentManager
 import android.content.Context
 import android.content.Intent
@@ -30,8 +31,8 @@ class AnimalCardAdapter(val context: Context, private val data: List<Animal>) : 
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentAnimal = data[position]
-        holder.animalName?.text = currentAnimal.Animal_Name
-        holder.animalType?.text = "${currentAnimal.animal_type} (${currentAnimal.Animal_Breed})"
+        holder.animalName.text = currentAnimal.Animal_Name
+        holder.animalType.text = "${currentAnimal.animal_type} (${currentAnimal.Animal_Breed})"
         //Load the animal icon into imgAnimalIcon ItemView
         currentAnimal.loadAnimalIcon(context,holder.imgAnimalIcon)
     }
@@ -41,7 +42,10 @@ class AnimalCardAdapter(val context: Context, private val data: List<Animal>) : 
         val animalType: TextView = itemView.txtAnimal
         val imgAnimalIcon: ImageView = itemView.imgAnimalIcon
 
-        init { itemView.setOnClickListener(this); itemView.setOnLongClickListener(this) }
+        init {
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this)
+        }
 
         override fun onClick(p0: View?) {
             val intent = Intent(context, AnimalDetailsActivity::class.java)
@@ -50,10 +54,9 @@ class AnimalCardAdapter(val context: Context, private val data: List<Animal>) : 
             context.startActivity(intent)
         }
         override fun onLongClick(v: View?): Boolean {
-            Toast.makeText(context,"Long tap",Toast.LENGTH_LONG).show()
-            val actionListDialogFragment = ActionBottomSheetFragment(data[position])
-            actionListDialogFragment.show(actionListDialogFragment.childFragmentManager, actionListDialogFragment.tag)
-            //actionListDialogFragment.show(actionListDialogFragment.fragmentManager, actionListDialogFragment.tag)
+            //Toast.makeText(context,"Long tap",Toast.LENGTH_LONG).show()
+            //val actionListDialogFragment = ActionBottomSheetFragment(data[position])
+            //actionListDialogFragment.show(actionListDialogFragment.requireFragmentManager(),actionListDialogFragment.tag)
             return false
         }
 
