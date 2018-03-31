@@ -14,6 +14,15 @@ Create a catalogue (like encyclopedia) of data on adoptable pets (name, descript
 3. **Bonus points for making it responsive and work well on small screens (phone, tablets) and with touch interactions.**
 4. **Extra bonus points if you add animal images to the catalogue.**
 
+## Screenshots
+
+<img src="https://github.com/l77e/Petscope/blob/master/Screenshot_20180331-123755.png" align="left" width="100" hspace="10" vspace="10">
+
+<img src="https://github.com/l77e/Petscope/blob/master/Screenshot_20180331-124345.png" align="left" width="100" hspace="10" vspace="10">
+
+<img src="https://github.com/l77e/Petscope/blob/master/Screenshot_20180331-124354.png" align="left" width="100" hspace="10" vspace="10">
+
+---
 ## Third party dependencies used for this application
 
 * Picasso by Squareup: For image management
