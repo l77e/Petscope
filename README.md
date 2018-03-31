@@ -3,7 +3,7 @@
 <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" align="left" width="70" hspace="10" vspace="10">
 
 A kotlin based Android application that allows users to submit their pets or animals to an online database. 
-[Download Now](https://github.com/l77e/Petscope/blob/master/app/release/app-release.apk)
+[Download Now](https://github.com/l77e/Petscope/raw/master/app/release/app-release.apk)
 
 ## Chosen Project: Option 4
 
